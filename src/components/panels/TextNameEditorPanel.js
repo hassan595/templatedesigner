@@ -33,15 +33,9 @@ const TextNameEditorPanel = (props) =>{
                                         clickOnSwitch={()=>{}}
                                         Icon={FormatColorTextIcon}
                                         hide={false}
-                                        showSwitch={true}
                                         responsiveToggleValue ={true}
                                         responsiveToggeling={true}
                                         responsiveSlider={this?.props.responsiveActive?"activeResponsiveName":''}>
-                        <div className="tde-sub-heading">Brand Name</div>
-                        {
-
-                            "Place Holder Brand Name"
-                        }
                         {this?.props.responsiveActive  ?
                             !isBrandVariationMode && !this?.verifyTextObjects() &&
                             <AddTextBtn className={"tde-mt-10 res-add-btn"} title={"ADD NEW TEXT"} textFontSize={textfontSize}

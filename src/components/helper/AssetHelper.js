@@ -1,6 +1,9 @@
 
 export const PanelList = {
     TextEditorPanel: 1,
+    // IconEditorPanel: 2,
+    // ImageEditorPanel: 3,
+    // SettingEditorPanel:4,
     TaglineEditorPanel: 2,
     IconEditorPanel: 3,
     ContainerEditorPanel: 4,

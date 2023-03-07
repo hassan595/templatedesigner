@@ -54,18 +54,11 @@ const TopBar = () => {
                         <FlipControl />
                     </div>
                     }
-
-
-
                     {
                         <div className=" tde-p-10  d-flex align-items-center tde-ml-30">
                             <LayeringControl />
                         </div>
-                    }{
-                    <div className=" tde-p-10  d-flex align-items-center tde-ml-10">
-                        <AlignWithControl />
-                    </div>
-                }
+                    }
                 </div>
             </nav>
 

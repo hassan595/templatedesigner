@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {PanelList} from "./helper/AssetHelper"
 
 import SiteHeader from "./SiteHeader";
@@ -15,7 +15,8 @@ import RedoIcon from '@material-ui/icons/Redo';
 
 const TemplateDesigner = (props) => {
     const [activePanel, setActivePanel] = useState(PanelList.TextNameEditorPanel)
-    const {/*activePanel,*/ activeObject, hasOverLayComponent, showDownloadModal,adminUser,isDesignLoaded,canvas } = props;
+    const {activeObject, isDesignLoaded} = props;
+
 
     return (
         <>
@@ -50,7 +51,7 @@ const TemplateDesigner = (props) => {
                         style={{background: "#F9F9F9"}}
                     >
                         {
-                            !isDesignLoaded &&
+                            isDesignLoaded &&
                             <div style={{display:'flex',flexDirection:'column',position:'absolute', width:'100%', height:'100%',justifyContent: 'center', alignItems: 'center'}}>
                                 <div className="d-flex w-100 justify-content-center" style={{paddingBottom:'74px'}}>
                                     <div className="lds-facebook" style={{zIndex:'999'}}>
@@ -79,7 +80,7 @@ const TemplateDesigner = (props) => {
 
                         <div className=" bg-light m-auto canvas-area"
                              style={{border: this?.state?.border, boxShadow: this?.state?.boxShadow}}>
-                            {/*<Canvas/>*/}
+                            <canvas id="canvas" width={500} height={600} style={{border:'1px solid #ECEEF0'}} />
                         </div>
 
                     </div>
