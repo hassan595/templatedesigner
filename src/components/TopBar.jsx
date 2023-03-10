@@ -30,15 +30,16 @@ const TopBar = () => {
 
                             <label htmlFor="" className={"mb-0 tde-pr-10"}>Background</label>
                             <div className="tde-btns-holder tde-p-10 d-flex align-items-center">
+
                                 {/*<ColorSwatch colorPicker={true} color={backgroundColor} onSelect={this.backgroundColorSelected}/>*/}
                             </div>
                         </div>
                     }
-                    {
-                        <div className="tde-btns-holder-custom tde-p-10  d-flex align-items-center tde-ml-30">
-                            <ClonedControl />
-                        </div>
-                    }
+                    {/*{*/}
+                    {/*    <div className="tde-btns-holder-custom tde-p-10  d-flex align-items-center tde-ml-30">*/}
+                    {/*        <ClonedControl />*/}
+                    {/*    </div>*/}
+                    {/*}*/}
                     {
                         <div className="d-flex align-items-center tde-ml-30 tde-py-5" >
                             <LayoutControl />

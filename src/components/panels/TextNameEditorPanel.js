@@ -1,10 +1,11 @@
-import React from "react";
-
+import React, {useEffect, useState} from "react";
+import {fabric} from "fabric"
 import SlideAblePanel from "./SlidablePanel";
-
+import {fontsList} from "../helper/AssetHelper";
+import WebFont from "webfontloader";
 import {
-    CollapsableSection,  CustomSearch, CustomSlider,
-    AddTextBtn, CustomIcon, PositionIt, CustomSelect
+    CollapsableSection, CustomSlider,
+    AddTextBtn, CustomIcon, CustomSelect
 } from "../common/"
 import {
 
@@ -15,19 +16,137 @@ import {
 
 const TextNameEditorPanel = (props) =>{
 
-        const {activeObject, textfontSize,isBrandVariationMode,deletedTextName} = props;
-        let propertiesValue = this?.getProperties(activeObject);
-        let fontSize = textfontSize;
+        const { isBrandVariationMode, deletedTextName, canvas} = props;
+        const [textCase, setTextCase] = useState(null)
+        const [textStyle, setTextStyle] = useState(null)
+
+        useEffect(()=>{
+            console.log("rendering textpanel", )
+            loadGoogleFonts(fontsList)
+        },[canvas])
+
+        let textfontSize = 15
+        let fontSize = 15;
         let charSpacing = 0;
-
-
-        let fontFamily = 'Roboto';
-        let textCase = 'capitalize';
         let activeControl = true;
+        let propertiesValue = null
+
+        const loadGoogleFonts = (fonts) => {
+            fonts.forEach(font =>
+            {
+                WebFont.load({
+                    google: {
+                        families: [font]
+                    }
+                });
+            })
+        }
+
+        const addTextToCanvas = () => {
+            console.log("canvas", canvas)
+            console.log("wh", canvas.width/2,canvas.height/2)
+            let text = new fabric.IText("template designer", {
+                top: canvas.height / 2,
+                left: canvas.width / 2,
+                originX:'center',
+                originY:'center',
+                fontFamily:'alex brush',
+                width: 200,
+                height: 200,
+                padding: 0,
+                fontSize: '16',
+            });
+            canvas.add(text)
+            canvas.setActiveObject(text)
+            canvas.requestRenderAll();
+        }
+
+        const textTransform = (property) => {
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            if (property === "uppercase")
+                activeObject.text = activeObject.text.toUpperCase();
+            else if (property === "lowercase")
+                activeObject.text = activeObject.text.toLowerCase();
+            else if (property === "capitalize")
+                activeObject.text = activeObject.text.toLowerCase().replace(/(?:^|\s|["'([{])+\S/g, match => match.toUpperCase());
+            setTextCase(property)
+            canvas.requestRenderAll()
+        }
+        const handleTextStyle = (property) => {
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            if (property === "Bold") {
+                if (activeObject.fontWeight === 'Bold'){
+                    activeObject.set({fontWeight:'normal'})
+                    property = 'normal'
+                }
+                else {
+                    activeObject.set({fontWeight: 'Bold'})
+                }
+            }
+            else if (property === "Italic") {
+                if (activeObject.fontStyle === 'italic') {
+                    activeObject.set({fontStyle: 'normal'})
+                    property = 'normal'
+                }
+                else {
+                    activeObject.set({fontStyle:'italic'})
+                }
+            }
+            else if (property === "underline") {
+                if (activeObject.fontStyle === 'italic') {
+                    activeObject.set({underline:false})
+                    property = 'normal'
+                }
+                else {
+                    activeObject.set({underline:true})
+                }
+            }
+            setTextStyle(property)
+            canvas.requestRenderAll()
+        }
+
+
+        const verifyTextObjects = ()=> {
+            
+        }
+        const handleChangeRotation = (value) => {
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            activeObject.set({angle:value})
+            canvas.renderAll()
+        }
+        const changeTextFontSize = (fontSize) => {
+            console.log("changeTextFontSize")
+
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            activeObject.set({fontSize:fontSize})
+            canvas.renderAll()
+        }
+        const changeTextLetterSpacing = (charSpacing) =>{
+            console.log("changeTextLetterSpacing")
+
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            charSpacing *= 20;
+            activeObject.set({charSpacing})
+            canvas.renderAll()
+
+        }
+        const handleFontFamily=(selectedFontFamily)=>{
+            let activeObject = canvas.getActiveObject()
+            if (!activeObject) return
+            activeObject.set({fontFamily:selectedFontFamily})
+            canvas.requestRenderAll();
+        }
+
 
         return (
+
             <>
-                <SlideAblePanel show={this?.state?.namePropertyControl || true} responsivetoggle={this?.state?.responsiveToggleSlide}>
+                <SlideAblePanel show={true}>
                     <CollapsableSection label={"Name"}
                                         checked={false}
                                         clickOnSwitch={()=>{}}
@@ -36,37 +155,24 @@ const TextNameEditorPanel = (props) =>{
                                         responsiveToggleValue ={true}
                                         responsiveToggeling={true}
                                         responsiveSlider={this?.props.responsiveActive?"activeResponsiveName":''}>
-                        {this?.props.responsiveActive  ?
-                            !isBrandVariationMode && !this?.verifyTextObjects() &&
-                            <AddTextBtn className={"tde-mt-10 res-add-btn"} title={"ADD NEW TEXT"} textFontSize={textfontSize}
-                                        handleAddText={this?.addTextToCanvas}/> :
-                            !isBrandVariationMode &&
-                            <AddTextBtn className={"tde-mt-10 res-add-btn"} title={"ADD NEW TEXT"} textFontSize={textfontSize}
-                                        handleAddText={this?.addTextToCanvas}/>
-                        }
+
+
+                        <AddTextBtn className={"tde-mt-10 res-add-btn"} title={"ADD NEW TEXT"} textFontSize={15}
+                                    handleAddText={()=>addTextToCanvas()}/>
+
                         <div className="d-flex align-items-center justify-content-between tde-mt-25 res-search-btn">
                             <div className="tde-sub-heading tde-mr-10">Font</div>
-                            <CustomSearch value={fontFamily}
-                                          disabled={!activeObject}
-                                          clickOnText={this?.handleFontSearch}/>
-                        </div>
-                        <div className="d-flex align-items-center tde-mt-25 res-style-btn">
-                            <div className="tde-sub-heading tde-mr-10">
-                                Style
-                            </div>
-                            <CustomSelect selected={propertiesValue?.fontStyle} changeSelection={this?.handleFontStyle}
-                                          options={propertiesValue?.activeFontVariants}/>
+                            <CustomSelect selected={propertiesValue?.fontFamily} changeSelection={handleFontFamily}
+                                          options={fontsList}/>
 
                         </div>
-
-
 
                         <div className="d-flex align-items-center  tde-py-5 tde-mt-25 res-case-btn">
                             <div className="tde-sub-heading tde-mr-10">Case</div>
 
                             <div className="tde-btns-holder tde-py-10 tde-px-20  d-flex">
                                 <CustomIcon
-                                    onClick={()=>this?.textTransform('lowercase')}
+                                    onClick={()=>textTransform('lowercase')}
                                     className={"icon tde-mr-15"}
                                     src={'lowercase'}
                                     button
@@ -74,7 +180,7 @@ const TextNameEditorPanel = (props) =>{
                                     active={textCase==='lowercase'}
                                 />
                                 <CustomIcon
-                                    onClick={()=>this?.textTransform('capitalize')}
+                                    onClick={()=>textTransform('capitalize')}
                                     className={"icon tde-mr-15"}
                                     src={'capitalize-case'}
                                     button
@@ -82,7 +188,7 @@ const TextNameEditorPanel = (props) =>{
                                     active={textCase==='capitalize'}
                                 />
                                 <CustomIcon
-                                    onClick={()=>this?.textTransform('uppercase')}
+                                    onClick={()=>textTransform('uppercase')}
                                     className={"icon"}
                                     src={'uppercase'}
                                     button
@@ -90,6 +196,36 @@ const TextNameEditorPanel = (props) =>{
                                     active={textCase==='uppercase'}
                                 />
 
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center  tde-py-5 tde-mt-25 res-case-btn">
+                            <div className="tde-sub-heading tde-mr-10">Style</div>
+
+                            <div className="tde-btns-holder tde-py-10 tde-px-20  d-flex">
+                                <CustomIcon
+                                    onClick={()=>handleTextStyle('Bold')}
+                                    className={"icon tde-mr-15"}
+                                    src={'bold'}
+                                    button
+                                    size={24}
+                                    active={textStyle==='Bold'}
+                                />
+                                <CustomIcon
+                                    onClick={()=>handleTextStyle('Italic')}
+                                    className={"icon tde-mr-15"}
+                                    src={'italic'}
+                                    button
+                                    size={24}
+                                    active={textStyle==='Italic'}
+                                />
+                                <CustomIcon
+                                    onClick={()=>handleTextStyle('underline')}
+                                    className={"icon"}
+                                    src={'underline'}
+                                    button
+                                    size={24}
+                                    active={textCase==='underline'}
+                                />
 
                             </div>
                         </div>
@@ -105,38 +241,38 @@ const TextNameEditorPanel = (props) =>{
                                         responsiveToggleValue ={this?.state.responsiveToggleSlide}
                                         responsiveToggeling={this?.responsiveToggeling}
                                         responsiveSlider={this?.props.responsiveActive?"activeResponsiveSlider":''}
-
-
                     >
 
                         <CustomSlider heading={"Font Size"}
                                       val={fontSize}
-                                      min={this?.props.minFontSize}
+                                      min={8}
                                       max={72}
-                                      disabled={activeControl}
+                                      disabled={false}
                                       unit={"px"}
-                                      onChange={this?.changeTextFontSize}
+                                      onChange={changeTextFontSize}
                         />
                         <CustomSlider
                             className={"tde-mt-25"}
                             heading={"Letter Spacing"}
                             val={charSpacing}
                             min={0}
-                            disabled={activeControl}
+                            disabled={false}
                             max={100}
                             unit={"px"}
-                            onChange={this?.changeTextLetterSpacing}
+                            onChange={changeTextLetterSpacing}
+                        />
+                        <CustomSlider
+                            className={"tde-mt-25"}
+                            heading={"Rotation"}
+                            val={charSpacing}
+                            min={0}
+                            disabled={false}
+                            max={360}
+                            unit={"px"}
+                            onChange={handleChangeRotation}
                         />
 
-
                     </CollapsableSection>
-                    <PositionIt
-                        disabled={activeControl}
-                        checked={deletedTextName?false:true}
-                        hide={deletedTextName?true:false}
-                        responsiveToggeling={this?.responsiveToggeling}
-                        responsiveSlider={this?.props.responsiveActive?"activeResponsiveSlider":''}
-                    />
                 </SlideAblePanel>
 
 
