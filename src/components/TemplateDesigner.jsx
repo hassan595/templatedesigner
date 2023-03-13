@@ -7,9 +7,8 @@ import TopBar from "./TopBar";
 import EditorPanel from "./panels/EditorPanel";
 import TextNameEditorPanel from "./panels/TextNameEditorPanel";
 import IconEditorPanel from "./panels/IconEditorPanel";
-import {CustomIcon} from "./common";
-import UndoIcon from '@material-ui/icons/Undo';
-import RedoIcon from '@material-ui/icons/Redo';
+
+import SettingsPanel from "./panels/SettingsPanel";
 
 let canvas = null;
 
@@ -56,6 +55,10 @@ const TemplateDesigner = (props) => {
                             {
                                 activePanel === PanelList.IconEditorPanel &&
                                 <IconEditorPanel setActiveObjectUpdated={props?.setActiveObjectUpdated} updateToolsHeader={props?.updateToolsHeader} activeObject={activeObject} responsiveActive={this?.state?.responsiveMoodToggle}/>
+                            }
+                            {
+                                activePanel === PanelList.SettingsEditorPanel &&
+                                <SettingsPanel />
                             }
 
                         </div>

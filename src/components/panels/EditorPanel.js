@@ -2,10 +2,9 @@ import React from 'react';
 import {PanelList} from "../helper/AssetHelper"
 import EditorPanelBtn from "../EditorPanelBtn";
 import TitleIcon from '@material-ui/icons/Title';
-import TaglineIcon from '@material-ui/icons/ShortText';
-import PresetsIcon from '@material-ui/icons/BookmarksOutlined';
-import ExtrasIcon from '@material-ui/icons/AddToPhotosOutlined';
+
 import IconsIcon from '@material-ui/icons/FilterVintageOutlined';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import EditIcon from '@material-ui/icons/Edit';
 import clsx from "clsx";
@@ -21,29 +20,10 @@ const EditorPanel = ({activeColor, setContainerPosition, onChangeTab, activeInde
                         <EditorPanelBtn active={activeIndex === PanelList.TextEditorPanel|| activeIndex === PanelList.TextNameEditorPanel}
                                         onClick={() => onChangeTab(PanelList.TextNameEditorPanel)} Icon={TitleIcon}
                                         text={"Name"}/>
-                        {/*<EditorPanelBtn active={activeIndex === PanelList.TaglineEditorPanel}*/}
-                        {/*                onClick={() => onChangeTab(PanelList.TaglineEditorPanel)} Icon={TaglineIcon}*/}
-                        {/*                text={"Tagline"}/>*/}
                         <EditorPanelBtn active={activeIndex === PanelList.IconEditorPanel}
                                         onClick={() => onChangeTab(PanelList.IconEditorPanel)} Icon={IconsIcon}
                                         text={"Icon"}/>
-                        {/*<EditorPanelBtn active={activeIndex === PanelList.ContainerEditorPanel}*/}
-                        {/*                onClick={() => onChangeTab(PanelList.ContainerEditorPanel)}*/}
-                        {/*                src={"container"} text={"Container"}/>*/}
-                        {/*{!responsiveActive &&*/}
-                        {/*<EditorPanelBtn active={activeIndex === PanelList.ExtrasEditorPanel}*/}
-                        {/*                onClick={() => onChangeTab(PanelList.ExtrasEditorPanel)} Icon={ExtrasIcon}*/}
-                        {/*                text={"Extras"}/>*/}
-                        {/*}*/}
 
-                        {/*<EditorPanelBtn active={activeIndex === PanelList.PresetsEditorPanel}*/}
-                        {/*                onClick={() => onChangeTab(PanelList.PresetsEditorPanel)} Icon={PresetsIcon}*/}
-                        {/*                text={"Presets"}/>*/}
-                        {
-                            // adminUser && <EditorPanelBtn active={activeIndex === PanelList.ThemeEditorPanel}
-                            //                              onClick={() => onChangeTab(PanelList.ThemeEditorPanel)} Icon={PresetsIcon}
-                            //                              text={"Theme"}/>
-                        }
 
                         <div>
                             <EditorPanelBtn className={"tde-colors-editor-panel-btn"}
@@ -60,9 +40,9 @@ const EditorPanel = ({activeColor, setContainerPosition, onChangeTab, activeInde
                                 })}
                             </div>
                         </div>
-                        {/*<EditorPanelBtn className={"mt-auto"} active={activeIndex === PanelList.SavedLogoEditorPanel}*/}
-                        {/*                fill={"red"} onClick={() => onChangeTab(PanelList.SavedLogoEditorPanel)}*/}
-                        {/*                Icon={FavoriteIcon} text={"Saved Logo"}/>*/}
+                        <EditorPanelBtn active={activeIndex === PanelList.SettingsEditorPanel}
+                                        fill={"red"} onClick={() => onChangeTab(PanelList.SettingsEditorPanel)}
+                                        Icon={SettingsIcon} text={"Settings"}/>
 
                     </div>
 

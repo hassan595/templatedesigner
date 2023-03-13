@@ -89,7 +89,7 @@ function CollapsableSection({className='',label,onClick,Icon,showSwitch,showCros
                 }
 
             </div>
-            <Collapse style={{position: 'relative', zIndex: '2'}} in={responsiveMoodCategory?true:!collapse} timeout="auto" >
+            <Collapse style={{position: 'relative'}} in={responsiveMoodCategory?true:!collapse} timeout="auto" >
                 <div className={clsx("tde-px-25 tde-py-20",responsiveSlider )} >
                     {children}
                 </div>

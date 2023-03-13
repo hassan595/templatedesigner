@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -32,13 +32,21 @@ import {Form} from "react-bootstrap";
 const nounCategoryId = -1;
 const myIconsCategoryId = -2;
 
+const PlaceHolderSVG = ()=>(
+    <svg className="MuiSvgIcon-root" focusable="false"
+                                aria-hidden="true"
+                                style={{height: "20px", width: "20px"}}>
+    <path
+        d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z" />
+    </svg>
+)
+
 const IconEditorPanel = (props) => {
 
 
 
 
-
-
+    const [dropDown, setDropDown] = useState(false)
         const {iconsList, activeObject,isBrandVariationMode,deletedIcon} = props;
         let {whoseList,iconsCategoriesList,directoryPath, shapes, showList, loadingIcons,showShapesList,iconColors,tempUploadImage} = this?.state || {};
         let propertiesValue = this?.getProperties(activeObject);
@@ -85,7 +93,7 @@ const IconEditorPanel = (props) => {
                                 :
                                 <>
                                 <label className={"mb-0 tde-sub-heading"}>Icon</label>
-                                <div className="tde-ml-10 tde-btns-holder tde-px-20 tde-py-10 cursor-pointer"
+                                <div className=" tde-btns-holder  cursor-pointer"
                                 onClick={this?.showIconsListPanel}>
                                 {
                                     propertiesValue?.iconSrc ?
@@ -93,7 +101,55 @@ const IconEditorPanel = (props) => {
 
                                         tempUploadImage ? <img src={tempUploadImage} style={{height: 30}} alt={'X'}/>
                                             :
-                                            <CustomIcon Icon={AddIcon}/>
+                                            <div className={`dropdown ${dropDown? "show" : "" }`}>
+                                                <a className="btn btn-outline-light dropdown-toggle d-flex align-items-center" href="#" role="button"
+                                                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                                   aria-expanded="false"
+                                                   onClick={()=>{
+                                                       setDropDown(prev=>!prev)
+                                                   }}
+                                                >
+                                                    <CustomIcon Icon={AddIcon} />
+                                                </a>
+
+                                                <div className={`dropdown-menu ${dropDown? "show" : "" }`} aria-labelledby="dropdownMenuLink" style={{left: "-55px"}}>
+                                                    <div className="container">
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                        </div>
+                                                        <div className="row">
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                            <div className="col-sm">
+                                                                <PlaceHolderSVG />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                 }
                                 </div>
                                 </>

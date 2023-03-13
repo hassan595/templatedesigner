@@ -1,21 +1,10 @@
 
 export const PanelList = {
     TextEditorPanel: 1,
-    // IconEditorPanel: 2,
-    // ImageEditorPanel: 3,
-    // SettingEditorPanel:4,
     TaglineEditorPanel: 2,
     IconEditorPanel: 3,
-    ContainerEditorPanel: 4,
-    ExtrasEditorPanel: 5,
-    PresetsEditorPanel: 6,
     ColorsEditorPanel: 7,
-    ThemeEditorPanel: 8,
-    SavedLogoEditorPanel: 9,
-    IndustryEditorPanel: 10,
-    StyleEditorPanel: 11,
-    LogoTypeEditorPanel: 12,
-    TextNameEditorPanel:13,
+    SettingsEditorPanel: 8
 };
 
 export const ToolsHeaderOptions={
